@@ -1,23 +1,34 @@
 <?php
 
-$host = "rdbms.strato.de";
-$dbname = "DEINE_DATENBANK";
-$username = "DEIN_BENUTZER";
-$password = "DEIN_PASSWORT";
+require 'config.php';
 
 try {
 
     $pdo = new PDO(
-        "mysql:host=$host;dbname=$dbname;charset=utf8",
-        $username,
-        $password
+
+        "mysql:host=" . DB_HOST . ";
+        dbname=" . DB_NAME . ";
+        charset=utf8mb4",
+
+        DB_USER,
+        DB_PASS
+
     );
 
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(
+        PDO::ATTR_ERRMODE,
+        PDO::ERRMODE_EXCEPTION
+    );
+
+    $pdo->setAttribute(
+        PDO::ATTR_DEFAULT_FETCH_MODE,
+        PDO::FETCH_ASSOC
+    );
 
 } catch(PDOException $e) {
 
-    die("Datenbankfehler: " . $e->getMessage());
+    die("Verbindung fehlgeschlagen.");
 
 }
+
 ?>
